@@ -1,13 +1,27 @@
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
+import { createStyleImportPlugin, AntdResolve } from 'vite-plugin-style-import'
 import react from '@vitejs/plugin-react-swc'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    createStyleImportPlugin({
+      resolves: [AntdResolve()]
+    })
+  ],
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true
+      }
+    }
+  },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL(import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '#': fileURLToPath(new URL('./types', import.meta.url))
     }
   }
 })

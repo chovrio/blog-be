@@ -17,5 +17,8 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: ['react', '@typescript-eslint'],
-  rules: {}
+  rules: {
+    // 允许使用any
+    '@typescript-eslint/no-explicit-any': 0
+  }
 }

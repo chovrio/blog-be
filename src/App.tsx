@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { Suspense } from 'react'
+import routers from '../routes'
+import BeforeEnter from '../routes/beforeEnter'
+import Loading from './pages/Loading'
 function App() {
   return (
-    <div className="App">
-      <div>我是App</div>
-    </div>
+    <Suspense fallback={<Loading />}>
+      <BeforeEnter routers={routers} />
+    </Suspense>
   )
 }
 
