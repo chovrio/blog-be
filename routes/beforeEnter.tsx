@@ -6,7 +6,7 @@ import {
   useRoutes
 } from 'react-router-dom'
 import { useEffect } from 'react'
-import { myRoute } from 'types/route'
+import type { myRoute } from '~/route'
 const BeforeEnter = ({ routers }: { routers: myRoute[] }) => {
   //1.在路由数组中找当前页面路由的对应路由项
   const fineRouter = (routes: myRoute[], path: string): any => {

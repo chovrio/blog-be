@@ -1,14 +1,22 @@
+import { login } from '@/server/Login'
 import { Button, Checkbox, Form, Input } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './index.module.less'
 export default function Login() {
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     console.log('Success:', values)
+    const res = await login({
+      name: values.name,
+      password: values.password
+    })
+    console.log(res)
+    localStorage.setItem('token', res.result.token)
   }
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
   }
+
   return (
     <div className={styles.login}>
       <div className={styles.content}>
@@ -27,7 +35,7 @@ export default function Login() {
           <div className={styles.account}>
             <Form.Item
               label="账号"
-              name="username"
+              name="name"
               className={styles.input}
               rules={[
                 { required: true, message: '请输入您的账号!' },
@@ -39,7 +47,6 @@ export default function Login() {
             >
               <Input />
             </Form.Item>
-
             <Form.Item
               label="密码"
               name="password"

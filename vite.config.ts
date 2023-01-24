@@ -21,7 +21,16 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '#': fileURLToPath(new URL('./types', import.meta.url))
+      '~': fileURLToPath(new URL('./types', import.meta.url))
+    }
+  },
+  server: {
+    proxy: {
+      '/dev': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/dev/, '')
+      }
     }
   }
 })

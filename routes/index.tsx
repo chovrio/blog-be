@@ -1,6 +1,6 @@
 import React, { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
-import type { myRoute } from '../types'
+import type { myRoute } from '~/route'
 const Login = lazy(() => import('@/pages/Login'))
 const Home = lazy(() => import('@/pages/Home'))
 const Error = lazy(() => import('@/pages/Error'))
