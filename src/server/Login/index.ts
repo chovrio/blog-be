@@ -1,4 +1,4 @@
-import type { IUser, LoginReturn } from '~/Login'
+import type { IUser, LoginReturn } from '~/login'
 import request from '..'
 
 export const login = async (user: IUser): Promise<LoginReturn> => {

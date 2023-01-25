@@ -10,8 +10,8 @@ import type { myRoute } from '~/route'
 const BeforeEnter = ({ routers }: { routers: myRoute[] }) => {
   //1.在路由数组中找当前页面路由的对应路由项
   const fineRouter = (routes: myRoute[], path: string): any => {
-    for (const val of routers) {
-      if (val.path === path) return val
+    for (const val of routes) {
+      if (val.path?.includes(path)) return val
       if (val.children) return fineRouter(val.children, path)
     }
     return null
@@ -21,16 +21,16 @@ const BeforeEnter = ({ routers }: { routers: myRoute[] }) => {
   const judgeRouter = (location: Location, navigate: NavigateFunction) => {
     const { pathname } = location
     //2.1路由数组找路由项
-    const findRoute = fineRouter(routers, pathname)
+    const path = pathname.split('/')[pathname.split('/').length - 1]
+    const findRoute = fineRouter(routers, path)
     //2.2没找到，说明没有这个路由，直接404
     if (!findRoute) {
-      navigate('/404')
-      return
+      return navigate('/404')
     }
     //2.3路由项如果有权限需求，进行逻辑验证
     if (findRoute.auth) {
       //用户未登陆，挑战登陆页面
-      if (!localStorage.getItem('user')) navigate('/login')
+      if (!localStorage.getItem('token')) navigate('/login')
     }
   }
 

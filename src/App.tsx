@@ -1,19 +1,21 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { connect } from 'react-redux'
 import routers from '../routes'
 import BeforeEnter from '../routes/beforeEnter'
-import Loading from './pages/Loading'
-function App() {
+import { fetchUserInfoAction } from '@/store/features/user'
+function App(props: { fetchUserInfo: () => void }) {
+  props.fetchUserInfo()
   const queryClient = new QueryClient()
   return (
     <QueryClientProvider client={queryClient}>
-      <>
-        <Suspense fallback={<Loading />}>
-          <BeforeEnter routers={routers} />
-        </Suspense>
-      </>
+      <BeforeEnter routers={routers} />
     </QueryClientProvider>
   )
 }
-
-export default App
+const mapDispatchToProps = (dispatch: any) => ({
+  fetchUserInfo() {
+    dispatch(fetchUserInfoAction())
+  }
+})
+export default connect(null, mapDispatchToProps)(App)

@@ -1,24 +1,32 @@
-import { login } from '@/server/Login'
-import { Button, Checkbox, Form, Input } from 'antd'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import useHint from '@/hooks/useHint'
+import { login } from '@/server/login'
+import { Button, Checkbox, Form, Input } from 'antd'
+import { useNavigate } from 'react-router-dom'
 import styles from './index.module.less'
 export default function Login() {
+  const { contextHolder, successMsg, errorMsg } = useHint()
+  const navigator = useNavigate()
   const onFinish = async (values: any) => {
-    console.log('Success:', values)
     const res = await login({
       name: values.name,
       password: values.password
     })
-    console.log(res)
-    localStorage.setItem('token', res.result.token)
+    if (res) {
+      successMsg('登录成功')
+      localStorage.setItem('token', res.result.token)
+      navigator('/home')
+    } else {
+      errorMsg('登录失败，请检查网络(也可能是服务器寄了)')
+    }
   }
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
+  const onFinishFailed = () => {
+    errorMsg('请输入正确的用户信息')
   }
 
   return (
     <div className={styles.login}>
+      {contextHolder}
       <div className={styles.content}>
         <Form
           className={styles.form}
@@ -76,7 +84,6 @@ export default function Login() {
             </Button>
           </Form.Item>
         </Form>
-        <Link to={'/home'}>home</Link>
       </div>
     </div>
   )
