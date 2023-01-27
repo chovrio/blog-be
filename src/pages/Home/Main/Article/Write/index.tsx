@@ -7,12 +7,15 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter' // 代码�
 //高亮的主题，还有很多别的主题，可以自行选择
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import type { TextAreaRef } from 'antd/es/input/TextArea'
+import type { InputRef } from 'antd'
 import styles from './index.module.less'
-import { Button, Input, InputRef } from 'antd'
+import { Button, Input } from 'antd'
 import { connect } from 'react-redux'
-import { User } from '~/user'
+import 'github-markdown-css'
+import type { User } from '~/user'
 import { publishArticle } from '@/server/article'
 import useHint from '@/hooks/useHint'
+
 const Write: React.FC<{ user: User }> = ({ user }) => {
   const { successMsg, errorMsg, contextHolder } = useHint()
   const parseRef = useRef<HTMLDivElement>(null)
@@ -34,7 +37,12 @@ const Write: React.FC<{ user: User }> = ({ user }) => {
         title: inputRef.current.input.value,
         content: text
       })
+
       if (res && res.code == 200) {
+        if (textRef.current?.resizableTextArea?.textArea.value) {
+          textRef.current.resizableTextArea.textArea.value = ''
+        }
+        inputRef.current.input.value = ''
         successMsg('文章上传成功')
       } else {
         errorMsg('文章上传失败')

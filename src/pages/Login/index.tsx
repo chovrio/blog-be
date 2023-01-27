@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useHint from '@/hooks/useHint'
 import { login } from '@/server/login'
 import { Button, Checkbox, Form, Input } from 'antd'
@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import styles from './index.module.less'
 export default function Login() {
   const { contextHolder, successMsg, errorMsg } = useHint()
+  const [isCheck, setIsCheck] = useState<boolean>(true)
   const navigator = useNavigate()
+
   const onFinish = async (values: any) => {
     const res = await login({
       name: values.name,
@@ -14,7 +16,7 @@ export default function Login() {
     })
     if (res) {
       successMsg('登录成功')
-      localStorage.setItem('token', res.result.token)
+      if (isCheck) localStorage.setItem('token', res.result.token)
       navigator('/home')
     } else {
       errorMsg('登录失败，请检查网络(也可能是服务器寄了)')
@@ -75,7 +77,9 @@ export default function Login() {
             valuePropName="checked"
             wrapperCol={{ offset: 8, span: 16 }}
           >
-            <Checkbox>记住我</Checkbox>
+            <Checkbox onChange={e => setIsCheck(e.target.checked)}>
+              记住我
+            </Checkbox>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

@@ -16,10 +16,13 @@ const items: MenuProps['items'] = [
   {
     key: '4',
     danger: true,
-    label: <div>退出登录</div>
+    label: <div onClick={logout}>退出登录</div>
   }
 ]
-
+function logout() {
+  localStorage.removeItem('token')
+  location.href = '/login'
+}
 const Avactor: React.FC<{ user: User }> = props => {
   const { user } = props
   return (

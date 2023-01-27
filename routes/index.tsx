@@ -16,11 +16,15 @@ const BasePoint = lazy(() => import('@/pages/Home/Main/BasePoint'))
 const routes: myRoute[] = [
   {
     path: '/',
-    element: <Navigate to={'/home'} />
+    element: <Navigate to={'/home/system'} />
   },
   {
     path: '/404',
     element: <Error />
+  },
+  {
+    path: '/login',
+    element: <Login />
   },
   {
     path: '/home',
@@ -52,10 +56,6 @@ const routes: myRoute[] = [
         element: <Info />
       }
     ]
-  },
-  {
-    path: '/login',
-    element: <Login />
   }
 ]
 export default routes
