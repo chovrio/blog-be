@@ -17,7 +17,7 @@ import { publishArticle } from '@/server/article'
 import useHint from '@/hooks/useHint'
 
 const Write: React.FC<{ user: User }> = ({ user }) => {
-  const { successMsg, errorMsg, contextHolder } = useHint()
+  const { errorMsg } = useHint()
   const parseRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<TextAreaRef>(null)
   const inputRef = useRef<InputRef>(null)
@@ -43,15 +43,11 @@ const Write: React.FC<{ user: User }> = ({ user }) => {
           textRef.current.resizableTextArea.textArea.value = ''
         }
         inputRef.current.input.value = ''
-        successMsg('文章上传成功')
-      } else {
-        errorMsg('文章上传失败')
       }
     }
   }
   return (
     <div className={styles.write}>
-      {contextHolder}
       <TextArea
         style={{ resize: 'none' }}
         rows={35}

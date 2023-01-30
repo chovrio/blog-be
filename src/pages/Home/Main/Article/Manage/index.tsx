@@ -1,7 +1,8 @@
-import React from 'react'
-import { Button, Space, Table, Tag } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Button, Popconfirm, Space, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import { getAllArticle } from '@/server/article'
+import { deleteArticle, getAllArticle } from '@/server/article'
+import { getTime } from '@/utils/getTime'
 
 interface DataType {
   key: string
@@ -71,28 +72,48 @@ const columns: ColumnsType<DataType> = [
         <Button size="small" type="primary">
           修改
         </Button>
-        <Button size="small" type="primary" danger>
-          删除
-        </Button>
+        <Popconfirm
+          title="提示"
+          cancelText="取消"
+          okText="确定"
+          description="确定要删除该文章"
+          onConfirm={async () => {
+            changeData(record.key)
+            await deleteArticle(record.key)
+          }}
+        >
+          <Button type="primary" size="small" danger>
+            删除
+          </Button>
+        </Popconfirm>
       </Space>
     )
   }
 ]
-getAllArticle().then(res => {
-  res.result.forEach(item => {
-    const obj: DataType = {
-      key: item._id,
-      name: item.name,
-      author: item.author,
-      time: item.createTime as unknown as string,
-      uptime: item.updateTime as unknown as string,
-      tags: item.tags ?? ['无']
-    }
-    data.push(obj)
-  })
-})
-const data: DataType[] = []
+let changeData: (key: string) => void
 const Manage: React.FC = () => {
+  const [data, setData] = useState<any[]>([])
+  changeData = (key: string) => {
+    const newArr = data.filter(item => item.key !== key)
+    setData(newArr)
+  }
+  useEffect(() => {
+    getAllArticle().then(res => {
+      const arr: any = []
+      res.result.reverse().forEach(item => {
+        const obj: DataType = {
+          key: item._id,
+          name: item.name,
+          author: item.author,
+          time: getTime(item.createTime),
+          uptime: getTime(item.updateTime),
+          tags: item.tags ?? ['无']
+        }
+        arr.push(obj)
+      })
+      setData(arr)
+    })
+  }, [])
   return <Table columns={columns} dataSource={data} />
 }
 

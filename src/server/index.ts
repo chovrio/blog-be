@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import { RequestConfig } from '~/axios'
 import { BASE_URL, TIME_OUT } from './config'
 import Request from './request'
@@ -19,13 +20,15 @@ const request = new Request({
       return err
     },
     responseSuccessFn(res) {
-      // messageApi.open({
-      //   type: 'success',
-      //   content: reqConfig.successMsg
-      // })
+      if (res.status !== 200) {
+        reqConfig.errorMsg && message.error(reqConfig.errorMsg)
+      } else {
+        reqConfig.successMsg && message.success(reqConfig.successMsg)
+      }
       return res
     },
     responseFailureFn(err) {
+      reqConfig.errorMsg && message.error(reqConfig.errorMsg)
       return err
     }
   }
