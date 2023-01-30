@@ -5,7 +5,7 @@ import { Button, Checkbox, Form, Input } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import styles from './index.module.less'
 export default function Login() {
-  const { contextHolder, successMsg, errorMsg } = useHint()
+  const { successMsg, errorMsg } = useHint()
   const [isCheck, setIsCheck] = useState<boolean>(true)
   const navigator = useNavigate()
 
@@ -28,7 +28,6 @@ export default function Login() {
 
   return (
     <div className={styles.login}>
-      {contextHolder}
       <div className={styles.content}>
         <Form
           className={styles.form}
