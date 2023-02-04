@@ -39,20 +39,20 @@ class Request {
     }
   }
   // 封装网络请求的方法
-  request<T>(config: RequestConfig<T>) {
+  request<T>(config: RequestConfig<T>): Promise<T> {
     // 如果又请求成功的特例拦截，就先执行
     if (config.interceptors?.requsetSuccessFn) {
       config.interceptors.requsetSuccessFn(<any>config)
     }
-    return new Promise<T>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.instance
-        .request<any, T>(config)
+        .request<T, any>(config)
         .then(res => {
           // 如果事先做了特例的响应拦截，就执行特例
           if (config.interceptors?.responseSuccessFn) {
             res = config.interceptors.responseSuccessFn(res)
           }
-          resolve(res)
+          resolve(res.data)
         })
         .catch(err => {
           reject(err)

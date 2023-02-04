@@ -1,3 +1,4 @@
+import Loading from '@/pages/Loading'
 import { Content } from 'antd/es/layout/layout'
 import React, { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
@@ -12,7 +13,7 @@ export default function Main() {
       }}
     >
       <div>
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={<Loading />}>
           <Outlet />
         </Suspense>
       </div>

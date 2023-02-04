@@ -33,27 +33,33 @@ const routes: myRoute[] = [
     children: [
       {
         path: 'system',
-        element: <System />
+        element: <System />,
+        auth: true
       },
       {
         path: 'basepoint',
-        element: <BasePoint />
+        element: <BasePoint />,
+        auth: true
       },
       {
         path: 'article/write',
-        element: <Write />
+        element: <Write />,
+        auth: true
       },
       {
         path: 'article/manage',
-        element: <ArticleManage />
+        element: <ArticleManage />,
+        auth: true
       },
       {
         path: 'user/manage',
-        element: <UserManage />
+        element: <UserManage />,
+        auth: true
       },
       {
         path: 'user/info',
-        element: <Info />
+        element: <Info />,
+        auth: true
       }
     ]
   }

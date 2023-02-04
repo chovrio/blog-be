@@ -15,12 +15,42 @@ import 'github-markdown-css'
 import type { User } from '~/user'
 import { publishArticle } from '@/server/article'
 import useHint from '@/hooks/useHint'
+import { Select, Tag } from 'antd'
+import type { CustomTagProps } from 'rc-select/lib/BaseSelect'
 
+const options = [
+  { value: 'life' },
+  { value: 'code' },
+  { value: '心得' },
+  { value: '想法?' }
+]
+
+const tagRender = (props: CustomTagProps) => {
+  const { label, value, closable, onClose } = props
+  const colors = ['gold', 'lime', 'green', 'cyan']
+  const index = options.findIndex(item => item.value === value)
+  const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+  }
+  return (
+    <Tag
+      color={colors[index]}
+      onMouseDown={onPreventMouseDown}
+      closable={closable}
+      onClose={onClose}
+      style={{ marginRight: 3 }}
+    >
+      {label}
+    </Tag>
+  )
+}
 const Write: React.FC<{ user: User }> = ({ user }) => {
   const { errorMsg } = useHint()
   const parseRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<TextAreaRef>(null)
   const inputRef = useRef<InputRef>(null)
+  const [tags, setTags] = useState<string[]>([])
   const [text, setText] = useState<string>('')
   const input = () => {
     if (parseRef.current) {
@@ -35,9 +65,9 @@ const Write: React.FC<{ user: User }> = ({ user }) => {
     } else {
       const res = await publishArticle({
         title: inputRef.current.input.value,
-        content: text
+        content: text,
+        tags
       })
-
       if (res && res.code == 200) {
         if (textRef.current?.resizableTextArea?.textArea.value) {
           textRef.current.resizableTextArea.textArea.value = ''
@@ -64,13 +94,13 @@ const Write: React.FC<{ user: User }> = ({ user }) => {
               const match = /language-(\w+)/.exec(className || '')
               return !inline && match ? (
                 <SyntaxHighlighter
-                  // eslint-disable-next-line react/no-children-prop
-                  children={String(children).replace(/\n$/, '')}
                   style={tomorrow as any}
                   language={match[1]}
                   PreTag="div"
-                  {...props}
-                />
+                  // {...props}
+                >
+                  {String(children).replace(/\n$/, '')}
+                </SyntaxHighlighter>
               ) : (
                 <code className={className} {...props}>
                   {children}
@@ -87,6 +117,16 @@ const Write: React.FC<{ user: User }> = ({ user }) => {
         placeholder="请输入文章标题"
         size="small"
         className={styles.title}
+      />
+      <Select
+        className={styles.select}
+        mode="multiple"
+        showArrow
+        tagRender={tagRender}
+        defaultValue={[]}
+        style={{ width: '100%' }}
+        options={options}
+        onChange={e => setTags(e)}
       />
       <Button onClick={publish} className={styles.btn} type="primary">
         发布

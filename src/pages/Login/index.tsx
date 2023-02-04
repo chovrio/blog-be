@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import useHint from '@/hooks/useHint'
 import { login } from '@/server/login'
-import { Button, Checkbox, Form, Input } from 'antd'
+import { Button, Checkbox, Form, Input, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import styles from './index.module.less'
 export default function Login() {
-  const { successMsg, errorMsg } = useHint()
   const [isCheck, setIsCheck] = useState<boolean>(true)
   const navigator = useNavigate()
 
@@ -15,15 +13,12 @@ export default function Login() {
       password: values.password
     })
     if (res) {
-      successMsg('登录成功')
       if (isCheck) localStorage.setItem('token', res.result.token)
       navigator('/home')
-    } else {
-      errorMsg('登录失败，请检查网络(也可能是服务器寄了)')
     }
   }
   const onFinishFailed = () => {
-    errorMsg('请输入正确的用户信息')
+    message.error('请输入正确的用户信息')
   }
 
   return (

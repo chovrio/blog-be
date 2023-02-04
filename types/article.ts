@@ -3,6 +3,7 @@ import { IRes } from '.'
 export interface IData {
   title: string
   content: string
+  tags: string[]
 }
 interface IResult {
   author: string
