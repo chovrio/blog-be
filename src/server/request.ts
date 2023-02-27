@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import type { AxiosInstance } from 'axios'
 import type { RequestConfig } from '~/axios'
 class Request {

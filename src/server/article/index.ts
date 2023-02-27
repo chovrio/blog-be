@@ -26,3 +26,9 @@ export const deleteArticle = async (id: string) => {
     errorMsg: '删除文章失败'
   })
 }
+// 获得指定文章
+export const getArticleContent = async (id: string) => {
+  return await request.get({
+    url: `/essay/content/${id}`
+  })
+}

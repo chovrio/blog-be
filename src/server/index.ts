@@ -20,6 +20,19 @@ const request = new Request({
       return err
     },
     responseSuccessFn(res) {
+      if ((<any>res).response) {
+        if (
+          (<any>res).response.data.code == 403 &&
+          !location.pathname.includes('/login')
+        ) {
+          message.error('用户凭证已过期，将自动跳转登录页面')
+          setTimeout(() => {
+            window.location.replace(
+              `http${import.meta.env.DEV ? '' : 's'}://${location.host}/login`
+            )
+          }, 500)
+        }
+      }
       if (res.status !== 200) {
         reqConfig.errorMsg && message.error(reqConfig.errorMsg)
       } else {

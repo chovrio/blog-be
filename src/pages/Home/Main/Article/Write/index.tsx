@@ -1,11 +1,5 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import TextArea from 'antd/es/input/TextArea'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm' // 划线、表、任务列表和直接url等的语法扩展
-import rehypeRaw from 'rehype-raw' // 解析标签，支持html语法
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter' // 代码高亮
-//高亮的主题，还有很多别的主题，可以自行选择
-import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import type { TextAreaRef } from 'antd/es/input/TextArea'
 import type { InputRef } from 'antd'
 import styles from './index.module.less'
@@ -17,7 +11,7 @@ import { publishArticle } from '@/server/article'
 import useHint from '@/hooks/useHint'
 import { Select, Tag } from 'antd'
 import type { CustomTagProps } from 'rc-select/lib/BaseSelect'
-
+import MarkDown from '../components/MarkDown'
 const options = [
   { value: 'life' },
   { value: 'code' },
@@ -78,6 +72,7 @@ const Write: React.FC<{ user: User }> = ({ user }) => {
   }
   return (
     <div className={styles.write}>
+      {/* <MyEditor /> */}
       <TextArea
         style={{ resize: 'none' }}
         rows={35}
@@ -86,31 +81,7 @@ const Write: React.FC<{ user: User }> = ({ user }) => {
         onKeyUp={input}
       />
       <div ref={parseRef} className={styles.parse}>
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeRaw]}
-          components={{
-            code({ inline, className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || '')
-              return !inline && match ? (
-                <SyntaxHighlighter
-                  style={tomorrow as any}
-                  language={match[1]}
-                  PreTag="div"
-                  // {...props}
-                >
-                  {String(children).replace(/\n$/, '')}
-                </SyntaxHighlighter>
-              ) : (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              )
-            }
-          }}
-        >
-          {text}
-        </ReactMarkdown>
+        <MarkDown text={text} />
       </div>
       <Input
         ref={inputRef}
@@ -118,16 +89,18 @@ const Write: React.FC<{ user: User }> = ({ user }) => {
         size="small"
         className={styles.title}
       />
-      <Select
-        className={styles.select}
-        mode="multiple"
-        showArrow
-        tagRender={tagRender}
-        defaultValue={[]}
-        style={{ width: '100%' }}
-        options={options}
-        onChange={e => setTags(e)}
-      />
+      <div className={styles.select}>
+        <div style={{ width: '100px', color: 'red' }}>选择标签：</div>
+        <Select
+          mode="multiple"
+          showArrow
+          tagRender={tagRender}
+          defaultValue={[]}
+          style={{ width: '100%' }}
+          options={options}
+          onChange={e => setTags(e)}
+        />
+      </div>
       <Button onClick={publish} className={styles.btn} type="primary">
         发布
       </Button>

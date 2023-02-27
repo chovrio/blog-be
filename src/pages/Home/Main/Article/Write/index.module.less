@@ -1,11 +1,16 @@
 .write {
   display: flex;
+  height: 100%;
   // background-color: #f3f3f3;
+
   .textarea {
     width: 50%;
+    height: 90%;
   }
   .parse {
     width: 50%;
+    height: 90%;
+    overflow-y: scroll;
     padding-left: 20px;
     padding-top: 10px;
     border: 1px solid gray;
@@ -20,10 +25,11 @@
     right: 3%;
   }
   .select {
+    display: flex;
     position: absolute;
     width: 300px !important;
-
     bottom: 40px;
+    align-items: center;
   }
   .title {
     position: absolute;

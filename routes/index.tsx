@@ -9,7 +9,7 @@ import type { myRoute } from '~/route'
 // const Error = lazy(() => import('@/pages/Error'))
 const System = lazy(() => import('@/pages/Home/Main/System'))
 const ArticleManage = lazy(() => import('@/pages/Home/Main/Article/Manage'))
-const Write = lazy(() => import('@/pages/Home/Main/Article/Write'))
+const ArticleWrite = lazy(() => import('@/pages/Home/Main/Article/Write'))
 const Info = lazy(() => import('@/pages/Home/Main/User/Info'))
 const UserManage = lazy(() => import('@/pages/Home/Main/User/Manage'))
 const BasePoint = lazy(() => import('@/pages/Home/Main/BasePoint'))
@@ -43,7 +43,7 @@ const routes: myRoute[] = [
       },
       {
         path: 'article/write',
-        element: <Write />,
+        element: <ArticleWrite />,
         auth: true
       },
       {
@@ -56,6 +56,7 @@ const routes: myRoute[] = [
         element: <UserManage />,
         auth: true
       },
+
       {
         path: 'user/info',
         element: <Info />,

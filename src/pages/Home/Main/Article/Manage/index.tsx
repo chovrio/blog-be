@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Popconfirm, Space, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import { deleteArticle, getAllArticle } from '@/server/article'
+import {
+  deleteArticle,
+  getAllArticle,
+  getArticleContent
+} from '@/server/article'
 import { getTime } from '@/utils/getTime'
+import MarkDown from '../components/MarkDown'
+import styles from './index.module.less'
 
 interface DataType {
   key: string
@@ -66,6 +72,10 @@ const columns: ColumnsType<DataType> = [
           size="small"
           type="primary"
           style={{ backgroundColor: 'green' }}
+          onClick={async () => {
+            const res = await getArticleContent(record.key)
+            changeInfo(res.result.info, res.result.content)
+          }}
         >
           阅读
         </Button>
@@ -91,11 +101,20 @@ const columns: ColumnsType<DataType> = [
   }
 ]
 let changeData: (key: string) => void
+let changeInfo: (info: any, text: string) => void
 const Manage: React.FC = () => {
   const [data, setData] = useState<any[]>([])
+  const [content, setContent] = useState<string>('')
+  const [info, setInfo] = useState<any>({})
+  const [showArticle, setShowArticle] = useState<boolean>(false)
   changeData = (key: string) => {
     const newArr = data.filter(item => item.key !== key)
     setData(newArr)
+  }
+  changeInfo = (info, text) => {
+    setInfo(info)
+    setContent(text)
+    setShowArticle(true)
   }
   useEffect(() => {
     getAllArticle().then(res => {
@@ -114,7 +133,31 @@ const Manage: React.FC = () => {
       setData(arr)
     })
   }, [])
-  return <Table columns={columns} dataSource={data} />
+  return (
+    <div className={styles.content}>
+      <Table columns={columns} dataSource={data} />
+      {showArticle && content && (
+        <>
+          <div className={styles.showArticle}>
+            <span
+              className={styles.close}
+              onClick={() => setShowArticle(false)}
+            >
+              x
+            </span>
+            <div className={styles.title}>
+              <h2>{info.name}</h2>
+              <h4>作者：{info.author}</h4>
+              <h4>创作时间：{getTime(info.createTime)}</h4>
+              <h4>最近更新：{getTime(info.updateTime)}</h4>
+            </div>
+            <MarkDown text={content} />
+          </div>
+          <div className={styles.shadow}></div>
+        </>
+      )}
+    </div>
+  )
 }
 
 export default Manage

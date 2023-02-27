@@ -1,8 +1,11 @@
 import Loading from '@/pages/Loading'
+import { fetchUserInfoAction } from '@/store/features/user'
 import { Content } from 'antd/es/layout/layout'
 import React, { Suspense } from 'react'
+import { connect } from 'react-redux'
 import { Outlet } from 'react-router-dom'
-export default function Main() {
+function Main(props: { fetchUserInfo: () => void }) {
+  props.fetchUserInfo()
   return (
     <Content
       style={{
@@ -12,7 +15,7 @@ export default function Main() {
         backgroundColor: 'white'
       }}
     >
-      <div>
+      <div style={{ height: '100%' }}>
         <Suspense fallback={<Loading />}>
           <Outlet />
         </Suspense>
@@ -20,3 +23,9 @@ export default function Main() {
     </Content>
   )
 }
+const mapDispatchToProps = (dispatch: any) => ({
+  fetchUserInfo() {
+    dispatch(fetchUserInfoAction())
+  }
+})
+export default connect(null, mapDispatchToProps)(Main)
