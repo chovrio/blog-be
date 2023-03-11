@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky install",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "deploy": "vite build && chovrio deploy"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
@@ -39,6 +40,7 @@
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "@vitejs/plugin-react-swc": "^3.0.0",
+    "chovrio": "^1.0.1",
     "commitizen": "^4.3.0",
     "commitlint": "^17.4.2",
     "consola": "^2.15.3",

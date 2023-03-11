@@ -1,5 +1,16 @@
 ## 后台
 
+## 项目依赖
+
+- react
+- typescript
+- antd
+- axios
+- react-router-dom
+- @wangeditor(富文本编辑器)
+- react-markdown
+- redux-tooltik
+
 ### 功能
 
 - 系统总览
@@ -20,10 +31,3 @@
   pnpm build
   pnpm preview # 预览
 ```
-
-### 技术栈
-
-- react
-- redux-tooltik
-- antdesign
-- axios
