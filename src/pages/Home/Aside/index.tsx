@@ -32,7 +32,8 @@ const items: MenuItem[] = [
   getItem('动态埋点', 'basepoint', <DesktopOutlined />),
   getItem('文章', 'article', <ContainerOutlined />, [
     getItem('写文章', 'article/write'),
-    getItem('文章管理', 'article/manage')
+    getItem('文章管理', 'article/manage'),
+    getItem('富文本编辑器', 'article/editor')
   ]),
 
   getItem('用户管理', 'sub1', <MailOutlined />, [

@@ -10,6 +10,7 @@ import type { myRoute } from '~/route'
 const System = lazy(() => import('@/pages/Home/Main/System'))
 const ArticleManage = lazy(() => import('@/pages/Home/Main/Article/Manage'))
 const ArticleWrite = lazy(() => import('@/pages/Home/Main/Article/Write'))
+const ArticleEditor = lazy(() => import('@/pages/Home/Main/Article/Editor'))
 const Info = lazy(() => import('@/pages/Home/Main/User/Info'))
 const UserManage = lazy(() => import('@/pages/Home/Main/User/Manage'))
 const BasePoint = lazy(() => import('@/pages/Home/Main/BasePoint'))
@@ -49,6 +50,11 @@ const routes: myRoute[] = [
       {
         path: 'article/manage',
         element: <ArticleManage />,
+        auth: true
+      },
+      {
+        path: 'article/editor',
+        element: <ArticleEditor />,
         auth: true
       },
       {

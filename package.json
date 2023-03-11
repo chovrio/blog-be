@@ -13,6 +13,8 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@reduxjs/toolkit": "^1.9.1",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-react": "^1.0.6",
     "antd": "^5.1.6",
     "axios": "^1.2.3",
     "chovrio-track": "^1.1.0",

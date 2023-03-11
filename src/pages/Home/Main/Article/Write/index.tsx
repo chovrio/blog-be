@@ -1,8 +1,7 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import TextArea from 'antd/es/input/TextArea'
 import type { TextAreaRef } from 'antd/es/input/TextArea'
 import type { InputRef } from 'antd'
-import styles from './index.module.less'
 import { Button, Input } from 'antd'
 import { connect } from 'react-redux'
 import 'github-markdown-css'
@@ -12,6 +11,7 @@ import useHint from '@/hooks/useHint'
 import { Select, Tag } from 'antd'
 import type { CustomTagProps } from 'rc-select/lib/BaseSelect'
 import MarkDown from '../components/MarkDown'
+import styles from './index.module.less'
 const options = [
   { value: 'life' },
   { value: 'code' },
