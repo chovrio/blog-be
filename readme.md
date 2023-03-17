@@ -39,10 +39,12 @@
 ## 项目亮点
 
 - 路由守卫
+- 基于 typescript 封装 axios
 
 ## 项目难点
 
 - 路由守卫
+- 基于 typescript 封装 axios
 
 ## 线上地址
 
