@@ -1,9 +1,30 @@
-import { IUser } from '~/user'
+import type { IUser, LoginReturn } from '~/login'
 import request from '..'
 
+// 登录接口
+export const login = async (user: IUser) => {
+  const res = await request.post<LoginReturn>({
+    url: '/user/login',
+    data: user,
+    successMsg: '登录成功',
+    errorMsg: '登录失败'
+  })
+  return res
+}
+
+// 注册接口
+export const register = async (user: IUser) => {
+  const res = await request.post({
+    url: '/user/register',
+    data: user,
+    successMsg: '注册成功',
+    errorMsg: '注册失败'
+  })
+  return res
+}
 // 获得用户信息
 export const getUserInfo = async () => {
-  const res = await request.get<IUser>({
+  const res = await request.get<LoginReturn>({
     url: '/user/info'
   })
   return res

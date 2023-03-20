@@ -1,21 +1,13 @@
-import React, { useState } from 'react'
-import { login } from '@/server/user'
-import { Button, Checkbox, Form, Input, message } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
+import { register } from '@/server/user'
+import { Button, Form, Input, message } from 'antd'
 import styles from './index.module.less'
 export default function Login() {
-  const [isCheck, setIsCheck] = useState<boolean>(true)
-  const navigator = useNavigate()
-
   const onFinish = async (values: any) => {
-    const res = await login({
+    register({
       name: values.name,
       password: values.password
     })
-    if (res) {
-      if (isCheck) localStorage.setItem('token', res.result.token)
-      navigator('/home/system')
-    }
   }
   const onFinishFailed = () => {
     message.error('请输入正确的用户信息')
@@ -66,21 +58,12 @@ export default function Login() {
               <Input.Password />
             </Form.Item>
           </div>
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{ offset: 8, span: 16 }}
-          >
-            <Checkbox onChange={e => setIsCheck(e.target.checked)}>
-              记住我
-            </Checkbox>
-          </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
-              登录
+              注册
             </Button>
-            <Button type="link" href="/register">
-              没有账号？点我进行注册
+            <Button type="link" href="/login">
+              已经注册？点我进行登录
             </Button>
           </Form.Item>
         </Form>

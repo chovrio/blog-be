@@ -4,7 +4,7 @@ export const fetchUserInfoAction = createAsyncThunk(
   'fetch/userinfo',
   async (_, store) => {
     const res = await getUserInfo()
-    store.dispatch(changeUser(res.result))
+    res.code === 200 && store.dispatch(changeUser(res.result))
   }
 )
 const userSlice = createSlice({
