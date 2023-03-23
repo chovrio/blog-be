@@ -31,7 +31,19 @@ export const getUserInfo = async () => {
   })
   return res
 }
-
+// 删除用户接口
+export const deleteUser = async (name: string) => {
+  return await request
+    .delete({
+      url: '/user/one',
+      data: {
+        name: name
+      },
+      successMsg: '删除用户成功',
+      errorMsg: '删除用户失败'
+    })
+    .then(data => data)
+}
 // 上传头像
 export const uploadActor = async (formdata: FormData) => {
   return await request

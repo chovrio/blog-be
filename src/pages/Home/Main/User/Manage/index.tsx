@@ -3,7 +3,7 @@ import type { InputRef } from 'antd'
 import { Button, Form, Input, Popconfirm, Table } from 'antd'
 import styles from './index.module.less'
 import type { FormInstance } from 'antd/es/form'
-import { getAllUser } from '@/server/user'
+import { deleteUser, getAllUser } from '@/server/user'
 import SmallRegister from './SmlalRegister'
 const EditableContext = React.createContext<FormInstance<any> | null>(null)
 
@@ -117,8 +117,9 @@ const Manage: React.FC = () => {
   const [dataSource, setDataSource] = useState<DataType[]>([])
   const [isShow, setIsShow] = useState<boolean>(false)
   const [f5, setF5] = useState<boolean>(false)
-  const handleDelete = (key: React.Key) => {
+  const handleDelete = (key: React.Key, name: string) => {
     const newData = dataSource.filter(item => item.key !== key)
+    deleteUser(name)
     setDataSource(newData)
   }
   const defaultColumns: (ColumnTypes[number] & {
@@ -149,7 +150,7 @@ const Manage: React.FC = () => {
             title="确定删除吗？"
             cancelText="取消"
             okText="确定"
-            onConfirm={() => handleDelete(record.key)}
+            onConfirm={() => handleDelete(record.key, record.name)}
           >
             <Button type="primary" size="small" danger>
               删除
