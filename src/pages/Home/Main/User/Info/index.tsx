@@ -11,12 +11,9 @@ const Info: React.FC<{ user: User }> = ({ user }) => {
     fileRef.current?.click()
   }
   const upload = async () => {
-    console.log(fileRef.current)
     const formdata = new FormData()
-    console.log(fileRef.current?.files)
     formdata.set('file', JSON.stringify(fileRef.current?.files))
     const res = await uploadActor(formdata)
-    console.log(res)
   }
   return (
     <div className={styles.Info}>

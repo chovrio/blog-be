@@ -1,8 +1,10 @@
-import type { IUser, LoginReturn } from '~/login'
+import { IRes } from '~/index'
+import type { LoginUser, LoginReturn } from '~/login'
+import type { User } from '~/user'
 import request from '..'
 
 // 登录接口
-export const login = async (user: IUser) => {
+export const login = async (user: LoginUser) => {
   const res = await request.post<LoginReturn>({
     url: '/user/login',
     data: user,
@@ -13,12 +15,12 @@ export const login = async (user: IUser) => {
 }
 
 // 注册接口
-export const register = async (user: IUser) => {
+export const register = async (user: LoginUser) => {
   const res = await request.post({
     url: '/user/register',
     data: user,
     successMsg: '注册成功',
-    errorMsg: '注册失败'
+    errorMsg: '存在网络波动或用户名重复'
   })
   return res
 }
@@ -36,6 +38,15 @@ export const uploadActor = async (formdata: FormData) => {
     .post({
       url: '/user/uploadactor',
       data: formdata
+    })
+    .then(data => data)
+}
+
+// 获取所有用户列表
+export const getAllUser = async () => {
+  return await request
+    .get<IRes<Array<User>>>({
+      url: '/user/all'
     })
     .then(data => data)
 }

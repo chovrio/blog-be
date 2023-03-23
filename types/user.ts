@@ -5,5 +5,6 @@ export interface User {
   info: string
   state: number
   avactor: string
+  _id: string
 }
 export type IUser = IRes<User>

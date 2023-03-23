@@ -1,5 +1,5 @@
 import type { IRes } from '.'
-export interface IUser {
+export interface LoginUser {
   name: string
   password: string
 }

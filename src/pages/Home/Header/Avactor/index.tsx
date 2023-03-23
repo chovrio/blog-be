@@ -4,27 +4,31 @@ import { Dropdown, Space } from 'antd'
 import { connect } from 'react-redux'
 import styles from './index.module.less'
 import { User } from '~/user'
-const items: MenuProps['items'] = [
-  {
-    key: '1',
-    label: <div>个人信息</div>
-  },
-  {
-    key: '2',
-    label: <div>文章管理</div>
-  },
-  {
-    key: '4',
-    danger: true,
-    label: <div onClick={logout}>退出登录</div>
-  }
-]
-function logout() {
-  localStorage.removeItem('token')
-  location.href = '/login'
-}
+import { useNavigate } from 'react-router-dom'
 const Avactor: React.FC<{ user: User }> = props => {
   const { user } = props
+  const navigator = useNavigate()
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: <div onClick={() => navigator('/home/user/info')}>个人信息</div>
+    },
+    {
+      key: '2',
+      label: (
+        <div onClick={() => navigator('/home/article/manage')}>文章管理</div>
+      )
+    },
+    {
+      key: '4',
+      danger: true,
+      label: <div onClick={logout}>退出登录</div>
+    }
+  ]
+  function logout() {
+    localStorage.removeItem('token')
+    navigator('/login')
+  }
   return (
     <Dropdown className={styles.avactor} menu={{ items }}>
       <a onClick={e => e.preventDefault()}>
