@@ -23,7 +23,8 @@ const request = new Request({
       if ((<any>res).response) {
         if (
           (<any>res).response.data.code == 403 &&
-          !location.pathname.includes('/login')
+          !location.pathname.includes('/login') &&
+          !location.pathname.includes('/register')
         ) {
           message.error('用户凭证已过期，将自动跳转登录页面')
           setTimeout(() => {
