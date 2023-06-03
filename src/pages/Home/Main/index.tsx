@@ -1,6 +1,8 @@
 import Loading from '@/pages/Loading'
+import { fetchUserInfoAction } from '@/store/features/user'
 import { Content } from 'antd/es/layout/layout'
 import React, { Suspense } from 'react'
+import { connect } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 function Main() {
   return (
@@ -20,4 +22,12 @@ function Main() {
     </Content>
   )
 }
-export default Main
+const mapStateToProps = (state: any) => ({
+  user: state.user
+})
+const mapDispatchToProps = (dispatch: any) => ({
+  fetchUserInfo() {
+    dispatch(fetchUserInfoAction())
+  }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Main)

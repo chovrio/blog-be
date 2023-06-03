@@ -8,11 +8,9 @@ import {
 import { useEffect } from 'react'
 import type { myRoute } from '~/route'
 import { connect } from 'react-redux'
-import { fetchUserInfoAction } from '@/store/features/user'
 import { User } from '~/user'
 const BeforeEnter = ({
   routers,
-  fetchUserInfo,
   user
 }: {
   routers: myRoute[]
@@ -57,7 +55,6 @@ const BeforeEnter = ({
   const location = useLocation()
   const router = useRoutes(routers)
   useEffect(() => {
-    fetchUserInfo()
     //路由守卫判断
     judgeRouter(location, navigate)
   }, [navigate, location, user])
@@ -66,9 +63,4 @@ const BeforeEnter = ({
 const mapStateToProps = (state: any) => ({
   user: state.user
 })
-const mapDispatchToProps = (dispatch: any) => ({
-  fetchUserInfo() {
-    dispatch(fetchUserInfoAction())
-  }
-})
-export default connect(mapStateToProps, mapDispatchToProps)(BeforeEnter)
+export default connect(mapStateToProps)(BeforeEnter)
