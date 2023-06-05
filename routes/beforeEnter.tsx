@@ -9,14 +9,7 @@ import { useEffect } from 'react'
 import type { myRoute } from '~/route'
 import { connect } from 'react-redux'
 import { User } from '~/user'
-const BeforeEnter = ({
-  routers,
-  user
-}: {
-  routers: myRoute[]
-  fetchUserInfo: () => void
-  user: User
-}) => {
+const BeforeEnter = ({ routers, user }: { routers: myRoute[]; user: User }) => {
   //1.在路由数组中找当前页面路由的对应路由项
   const fineRouter = (routes: myRoute[], paths: string[]): any => {
     for (const val of routes) {

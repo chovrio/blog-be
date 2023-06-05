@@ -1,10 +1,13 @@
 import Loading from '@/pages/Loading'
 import { fetchUserInfoAction } from '@/store/features/user'
 import { Content } from 'antd/es/layout/layout'
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Outlet } from 'react-router-dom'
-function Main() {
+function Main({ fetchUserInfo }: { fetchUserInfo: () => void }) {
+  useEffect(() => {
+    fetchUserInfo()
+  }, [])
   return (
     <Content
       style={{
